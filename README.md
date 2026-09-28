@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="static/images/logo/constellation-logo-horizontal-inverse.svg">
+    <img src="static/images/logo/constellation-logo-horizontal.svg" alt="Constellation Dataset" height="72">
+  </picture>
+</p>
+
 # Constellation Dataset
 
 This is the web page repository for the Constellation Dataset.
@@ -25,6 +32,17 @@ This data was collected at the [PAWR](https://advancedwireless.org/) [COSMOS tes
   publisher={Springer}
 }
 ```
+
+## Logo
+
+Vector logo files are in [`static/images/logo/`](static/images/logo/):
+
+- `constellation-logo.svg`: the primary portrait logo
+- `constellation-logo-horizontal.svg` and `constellation-logo-horizontal-inverse.svg`: horizontal versions for light and dark backgrounds
+- `constellation-badge.svg`: a square icon
+- `constellation-symbol.svg` and `constellation-symbol-navy.svg`: the simplified constellation for small sizes, for dark and light backgrounds
+
+The mark is a constellation in the shape of a "C", drawn over the intersection seen from above. The lettering is outlined, so the files need no fonts.
 
 ## Website Credits
 Parts of this project page were adopted from the [Nerfies](https://nerfies.github.io/) page.

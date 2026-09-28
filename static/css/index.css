@@ -176,9 +176,11 @@ strong {
   color: var(--on-night);
 }
 
-.topbar__brand img {
-  border-radius: 7px;
-  box-shadow: 0 0 0 1px var(--night-line), 0 0 18px rgba(77, 157, 255, 0.35);
+.topbar__mark {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  overflow: visible;
 }
 
 .topbar__links {
