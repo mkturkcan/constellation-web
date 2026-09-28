@@ -1,270 +1,623 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
-  <!-- Replace the content tag with appropriate information -->
-  <meta name="description" content="DESCRIPTION META TAG">
-  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG" />
-  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG" />
-  <meta property="og:url" content="URL OF THE WEBSITE" />
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/image/your_banner_image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-
-
-  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
-  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- Keywords for your paper to be indexed by-->
-  <meta name="keywords" content="urban, streetscapes, high-altitude">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
   <title>Constellation Dataset: Benchmarking High-Altitude Object Detection for an Urban Intersection</title>
+  <meta name="description"
+    content="Constellation is a dataset of 13K images for object detection in dense urban streetscapes seen from high-elevation cameras. Published in the International Journal of Computer Vision (2026).">
+  <meta name="keywords"
+    content="Constellation dataset, object detection, small object detection, high-altitude cameras, urban intersection, pedestrian detection, smart cities, edge computing, COSMOS testbed">
+  <meta name="author" content="Mehmet Kerem Turkcan">
+  <meta name="theme-color" content="#081533">
+  <link rel="canonical" href="https://mehmetkeremturkcan.com/constellation-web/">
+
+  <!-- Social cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Constellation Dataset — IJCV 2026">
+  <meta property="og:description"
+    content="13K images for high-altitude object detection at a dense New York City intersection. Benchmarks, pretrained models and edge deployment results.">
+  <meta property="og:url" content="https://mehmetkeremturkcan.com/constellation-web/">
+  <meta property="og:image" content="https://mehmetkeremturkcan.com/constellation-web/static/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Constellation Dataset: an annotated top-down view of an urban intersection.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Constellation Dataset — IJCV 2026">
+  <meta name="twitter:description"
+    content="13K images for high-altitude object detection at a dense New York City intersection.">
+  <meta name="twitter:image" content="https://mehmetkeremturkcan.com/constellation-web/static/images/og-image.jpg">
+
+  <!-- Google Scholar -->
+  <meta name="citation_title"
+    content="Constellation Dataset: Benchmarking High-Altitude Object Detection for an Urban Intersection">
+  <meta name="citation_author" content="Turkcan, Mehmet Kerem">
+  <meta name="citation_author" content="Zang, Chengbo">
+  <meta name="citation_author" content="Narasimhan, Sanjeev">
+  <meta name="citation_author" content="Je, Gyung Hyun">
+  <meta name="citation_author" content="Yu, Bo">
+  <meta name="citation_author" content="Ghasemi, Mahshid">
+  <meta name="citation_author" content="Ghaderi, Javad">
+  <meta name="citation_author" content="Zussman, Gil">
+  <meta name="citation_author" content="Kostic, Zoran">
+  <meta name="citation_journal_title" content="International Journal of Computer Vision">
+  <meta name="citation_publication_date" content="2026/09/16">
+  <meta name="citation_volume" content="134">
+  <meta name="citation_issue" content="10">
+  <meta name="citation_firstpage" content="429">
+  <meta name="citation_doi" content="10.1007/s11263-026-03029-1">
+  <meta name="citation_pdf_url" content="https://link.springer.com/content/pdf/10.1007/s11263-026-03029-1.pdf">
+
   <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="apple-touch-icon" href="static/images/apple-touch-icon.png">
 
-  <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="static/css/index.css">
+  <script defer src="static/js/index.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script src="static/js/bulma-carousel.min.js"></script>
-  <script src="static/js/bulma-slider.min.js"></script>
-  <script src="static/js/index.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Constellation Dataset",
+    "alternateName": "Constellation Urban Intersection Dataset",
+    "description": "Constellation is a dataset of 13,314 annotated images for research on object detection in dense urban streetscapes observed from high-elevation cameras, collected at a New York City intersection across varied lighting, weather and scene conditions. It targets small object detection, in particular pedestrians with a limited pixel footprint observed from tens of meters above.",
+    "url": "https://mehmetkeremturkcan.com/constellation-web/",
+    "sameAs": [
+      "https://huggingface.co/datasets/mehmetkeremturkcan/constellation_urban_intersection_dataset",
+      "https://github.com/zk2172-columbia/constellation-dataset"
+    ],
+    "license": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+    "isAccessibleForFree": true,
+    "keywords": ["object detection", "small object detection", "pedestrian detection", "high-altitude cameras", "urban intersection", "smart cities"],
+    "citation": "https://doi.org/10.1007/s11263-026-03029-1",
+    "creator": [
+      {"@type": "Person", "name": "Mehmet Kerem Turkcan"},
+      {"@type": "Person", "name": "Chengbo Zang"},
+      {"@type": "Person", "name": "Sanjeev Narasimhan"},
+      {"@type": "Person", "name": "Gyung Hyun Je"},
+      {"@type": "Person", "name": "Bo Yu"},
+      {"@type": "Person", "name": "Mahshid Ghasemi"},
+      {"@type": "Person", "name": "Javad Ghaderi"},
+      {"@type": "Person", "name": "Gil Zussman"},
+      {"@type": "Person", "name": "Zoran Kostic"}
+    ]
+  }
+  </script>
 </head>
 
 <body>
 
+  <!-- Icon sprite -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="i-journal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+    </symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+      <path d="M16 13H8" />
+      <path d="M16 17H8" />
+      <path d="M10 9H8" />
+    </symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <path d="m7 10 5 5 5-5" />
+      <path d="M12 15V3" />
+    </symbol>
+    <symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5v14a9 3 0 0 0 18 0V5" />
+      <path d="M3 12a9 3 0 0 0 18 0" />
+    </symbol>
+    <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path
+        d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+      <path d="m3.3 7 8.7 5 8.7-5" />
+      <path d="M12 22V12" />
+    </symbol>
+    <symbol id="i-github" viewBox="0 0 16 16" fill="currentColor">
+      <path
+        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+    </symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round">
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5" />
+    </symbol>
+  </svg>
 
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">Constellation: Benchmarking High-Altitude Object Detection for an
-              Urban Intersection</h1>
-            <div class="is-size-5 publication-authors">
-              <!-- Paper authors -->
-              <span class="author-block">
-                <a href="https://keremturkcan.com/" target="_blank">Mehmet Kerem Turkcan</a>,</span>
-              <span class="author-block">
-                <a href="https://www.linkedin.com/in/sanjeevnarasimhan" target="_blank">Sanjeev Narasimhan</a>,</span>
-              <span class="author-block"><a href="https://www.linkedin.com/in/chengbozang" target="_blank">Chengbo
-                  Zang</a>,</span>
-              <span class="author-block"><a href="https://www.linkedin.com/in/jay-je/" target="_blank">Gyung Hyun
-                  Je</a>,</span>
-              <span class="author-block"><a href="https://www.linkedin.com/in/bo-yu-cu/" target="_blank">Bo
-                  Yu</a>,</span>
-              <span class="author-block"><a
-                  href="https://wimnet.ee.columbia.edu/people/current-members/mahshid-ghasemi/" target="_blank">Mahshid
-                  Ghasemi</a>,</span>
-              <span class="author-block"><a href="https://www.ee.columbia.edu/~jghaderi/" target="_blank">Javad
-                  Ghaderi</a>,</span>
-              <span class="author-block"><a href="https://wimnet.ee.columbia.edu/people/gil-zussman/"
-                  target="_blank">Gil Zussman</a>,</span>
-              <span class="author-block"><a href="https://www.aidl.ee.columbia.edu/" target="_blank">Zoran
-                  Kostic</a></span>
-            </div>
 
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">Columbia University<br>2023</span>
-            </div>
+  <!-- Hero -->
+  <header class="hero">
+    <svg class="hero__art" viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g class="hero__constellation">
+        <g stroke="#7fb6ff" stroke-opacity=".3" stroke-width="1">
+          <path
+            d="M1220 150L1150 250M1220 150L1290 230M1290 230L1360 300M1150 250L1100 380M1150 250L1220 430M1290 230L1220 430M1100 380L1220 430M1100 380L1170 520M1220 430L1170 520M1170 520L1300 560M1300 560L1380 620M1170 520L1080 610M1220 430L1360 300" />
+          <path
+            d="M90 160L200 120M200 120L250 230M250 230L140 290M140 290L90 160M250 230L310 340M310 340L220 430M220 430L70 420M70 420L140 290M140 290L220 430" />
+        </g>
+        <g fill="#4d9dff" fill-opacity=".18">
+          <circle cx="1220" cy="150" r="8" /><circle cx="1150" cy="250" r="8" /><circle cx="1290" cy="230" r="8" />
+          <circle cx="1360" cy="300" r="8" /><circle cx="1100" cy="380" r="8" /><circle cx="1220" cy="430" r="10" />
+          <circle cx="1170" cy="520" r="8" /><circle cx="1300" cy="560" r="8" /><circle cx="1380" cy="620" r="8" />
+          <circle cx="1080" cy="610" r="8" /><circle cx="90" cy="160" r="8" /><circle cx="200" cy="120" r="8" />
+          <circle cx="250" cy="230" r="10" /><circle cx="140" cy="290" r="8" /><circle cx="310" cy="340" r="8" />
+          <circle cx="220" cy="430" r="8" /><circle cx="70" cy="420" r="8" />
+        </g>
+        <g fill="#dcebff">
+          <circle cx="1220" cy="150" r="2.4" /><circle cx="1150" cy="250" r="2.4" /><circle cx="1290" cy="230" r="2.4" />
+          <circle cx="1360" cy="300" r="2.4" /><circle cx="1100" cy="380" r="2.4" /><circle cx="1220" cy="430" r="3" />
+          <circle cx="1170" cy="520" r="2.4" /><circle cx="1300" cy="560" r="2.4" /><circle cx="1380" cy="620" r="2.4" />
+          <circle cx="1080" cy="610" r="2.4" /><circle cx="90" cy="160" r="2.4" /><circle cx="200" cy="120" r="2.4" />
+          <circle cx="250" cy="230" r="3" /><circle cx="140" cy="290" r="2.4" /><circle cx="310" cy="340" r="2.4" />
+          <circle cx="220" cy="430" r="2.4" /><circle cx="70" cy="420" r="2.4" />
+        </g>
+      </g>
+    </svg>
 
-            <div class="column has-text-centered">
-              <div class="publication-links">
-                <!-- Arxiv PDF link -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/2404.16944" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                    </span>
-                    <span>Paper</span>
-                  </a>
-                </span>
+    <nav class="topbar wrap" aria-label="Page sections">
+      <a class="topbar__brand" href="#top">
+        <img src="static/images/constellation-mark.png" alt="" width="28" height="28">
+        <span>Constellation</span>
+      </a>
+      <ul class="topbar__links">
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#dataset">Dataset</a></li>
+        <li><a href="#results">Findings</a></li>
+        <li><a href="#models">Models</a></li>
+        <li><a href="#citation">Cite</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero__body wrap" id="top">
+      <a class="venue" href="https://doi.org/10.1007/s11263-026-03029-1" target="_blank" rel="noopener">
+        <span class="venue__tag">IJCV 2026</span>
+        <span class="venue__name">International Journal of Computer Vision</span>
+        <span class="venue__oa">Open Access</span>
+      </a>
+
+      <h1 class="hero__title">Constellation Dataset</h1>
+      <p class="hero__subtitle">Benchmarking High&#8209;Altitude Object Detection for an Urban&nbsp;Intersection</p>
+
+      <p class="authors">
+        <a href="https://keremturkcan.com/" target="_blank" rel="noopener">Mehmet Kerem Turkcan</a>,
+        <a href="https://www.linkedin.com/in/chengbozang" target="_blank" rel="noopener">Chengbo Zang</a>,
+        <a href="https://www.linkedin.com/in/sanjeevnarasimhan" target="_blank" rel="noopener">Sanjeev Narasimhan</a>,
+        <a href="https://www.linkedin.com/in/jay-je/" target="_blank" rel="noopener">Gyung Hyun Je</a>,
+        <a href="https://www.linkedin.com/in/bo-yu-cu/" target="_blank" rel="noopener">Bo Yu</a>,
+        <a href="https://wimnet.ee.columbia.edu/people/current-members/mahshid-ghasemi/" target="_blank"
+          rel="noopener">Mahshid Ghasemi</a>,
+        <a href="https://www.ee.columbia.edu/~jghaderi/" target="_blank" rel="noopener">Javad Ghaderi</a>,
+        <a href="https://wimnet.ee.columbia.edu/people/gil-zussman/" target="_blank" rel="noopener">Gil Zussman</a>,
+        <a href="https://www.aidl.ee.columbia.edu/" target="_blank" rel="noopener">Zoran Kostic</a>
+      </p>
+      <p class="affiliation">Columbia University</p>
+
+      <div class="actions">
+        <a class="btn btn--primary" href="https://doi.org/10.1007/s11263-026-03029-1" target="_blank" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-journal" /></svg>Paper
+        </a>
+        <a class="btn" href="https://link.springer.com/content/pdf/10.1007/s11263-026-03029-1.pdf" target="_blank"
+          rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-download" /></svg>PDF
+        </a>
+        <a class="btn" href="https://arxiv.org/abs/2404.16944" target="_blank" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-file" /></svg>arXiv
+        </a>
+        <a class="btn" href="https://huggingface.co/datasets/mehmetkeremturkcan/constellation_urban_intersection_dataset"
+          target="_blank" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-database" /></svg>Dataset
+        </a>
+        <a class="btn" href="https://github.com/zk2172-columbia/constellation-dataset" target="_blank" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-github" /></svg>Code
+        </a>
+        <a class="btn" href="#models">
+          <svg class="icon" aria-hidden="true"><use href="#i-box" /></svg>Models
+        </a>
+      </div>
+    </div>
+  </header>
 
 
-                <!-- Github link -->
-                <span class="link-block">
-                  <a href="https://github.com/zk2172-columbia/constellation-dataset" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code</span>
-                  </a>
-                </span><br>
-                <span class="link-block">
-                  <a href="https://drive.google.com/drive/u/0/folders/11k-EDDusIvvQB0Ss46c-_7GX3jvjWw4B" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fas fa-database"></i>
-                    </span>
-                    <span>Dataset</span>
-                  </a>
-                </span>
-                <!-- Github link -->
-                <span class="link-block">
-                  <a href="https://github.com/mkturkcan/constellation?tab=readme-ov-file#model-table" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fas fa-code-branch"></i>
-                    </span>
-                    <span>Models</span>
-                  </a>
-                </span>
-              </div>
+  <main>
+
+    <!-- Teaser video -->
+    <section class="teaser wrap" aria-label="Teaser video">
+      <video poster="static/images/teaser-poster.jpg" autoplay muted loop playsinline controls preload="metadata"
+        aria-label="Top-down footage of the Constellation intersection under different conditions">
+        <source src="static/videos/base2.mp4" type="video/mp4">
+      </video>
+      <p class="teaser__lead">
+        Constellation is a dataset of <strong>13K images</strong> for detecting objects in dense urban streetscapes
+        seen from high-elevation cameras. It addresses small object detection, where pedestrians observed tens of
+        meters from above occupy only a handful of pixels, across changing lighting, building shadows, weather and
+        scene dynamics.
+      </p>
+
+      <dl class="stats">
+        <div class="stat">
+          <dt>Annotated images</dt>
+          <dd>13,314</dd>
+        </div>
+        <div class="stat">
+          <dt>Lower AP for pedestrians than vehicles</dt>
+          <dd>10%</dd>
+        </div>
+        <div class="stat">
+          <dt>Best mAP@0.5, at 7.08&nbsp;ms on an A100</dt>
+          <dd>95.4%</dd>
+        </div>
+        <div class="stat">
+          <dt>On Jetson Orin Nano with TensorRT, at 94.5% mAP</dt>
+          <dd>27.5&nbsp;ms</dd>
+        </div>
+      </dl>
+    </section>
+
+
+    <!-- Abstract -->
+    <section class="section" id="abstract">
+      <div class="wrap section__grid">
+        <h2 class="section__label">Abstract</h2>
+        <div class="prose">
+          <p>
+            As smart cities evolve, privacy-preserving edge processing at traffic intersections has become essential
+            for real-time safety applications while reducing data transmission and centralized computation.
+            High-altitude cameras with on-device inference provide an optimal solution that respects privacy while
+            delivering low-latency results. We introduce Constellation, a dataset of 13K images for research on object
+            detection in dense urban streetscapes from high-elevation cameras across varied temporal conditions. The
+            dataset addresses challenges in small object detection, particularly for pedestrians observed from elevated
+            positions with limited pixel footprints.
+          </p>
+          <p>
+            Our evaluation of contemporary object detection architectures reveals a 10% lower average precision (AP)
+            for small pedestrians compared to vehicles. Pretraining models on structurally similar datasets increases
+            mean AP by 1.8%. Domain-specific data augmentations and pseudo-labeled data from top-performing models
+            further enhance performance. We evaluate deployment viability on resource-constrained edge devices
+            including Jetson Orin, Raspberry Pi 5, and mobile platforms, demonstrating feasibility of
+            privacy-preserving on-device processing. Comparing models trained on data collected across different time
+            intervals reveals performance drift due to changing intersection conditions.
+          </p>
+          <p>
+            The best-performing model achieves 92.0% pedestrian AP with 7.08 ms inference time on A100 machines, and
+            95.4% mAP. The best-performing edge model achieves a similar performance, with Jetson Orin Nano achieving
+            94.5% mAP and 27.5 ms inference time using TensorRT.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Dataset -->
+    <section class="section section--tint" id="dataset">
+      <div class="wrap section__grid">
+        <h2 class="section__label">The dataset</h2>
+        <div class="prose">
+          <p>
+            Constellation was collected from a single high-elevation camera overlooking a busy intersection in New York
+            City, over a period spanning multiple years. Every image is annotated with bounding boxes for
+            <strong>pedestrians</strong> and <strong>vehicles</strong>. The same viewpoint is seen at dawn, in daylight,
+            in rain, fog and at night, and through changes to the street itself: faded markings, an unpaved surface
+            and fresh repaving.
+          </p>
+          <p>
+            The camera is deliberately installed at an altitude at which pedestrian faces and vehicle license plates
+            cannot be resolved, so the data is privacy-preserving by construction.
+          </p>
+        </div>
+
+        <figure class="figure figure--wide">
+          <img src="static/images/constellation_a2.png" width="1295" height="680" loading="lazy"
+            alt="Eight top-down views of the same intersection: dawn, daytime, rainy, night, old pavement from 2019, faded pavement, unpaved, and repaved.">
+          <figcaption><strong>Figure 1.</strong> The same camera under different conditions. (a–d) Weather and time
+            of day; (e–h) changes to the scene background.</figcaption>
+        </figure>
+
+        <div class="split">
+          <figure class="figure">
+            <img src="static/images/constellation_b2.png" width="788" height="780" loading="lazy"
+              alt="An annotated frame with green boxes around pedestrians and blue boxes around vehicles.">
+            <figcaption><strong>Figure 2.</strong> An annotated frame. Pedestrians (green) cover only a few pixels
+              compared to vehicles (blue).</figcaption>
+          </figure>
+
+          <div class="split__table">
+            <table class="table">
+              <caption><strong>Table 1.</strong> Images per split, grouped by weather condition.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Condition</th>
+                  <th scope="col" class="num">Train</th>
+                  <th scope="col" class="num">Test</th>
+                  <th scope="col" class="num">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Sunny</th>
+                  <td class="num">7,355</td>
+                  <td class="num">1,282</td>
+                  <td class="num">8,637</td>
+                </tr>
+                <tr>
+                  <th scope="row">Night</th>
+                  <td class="num">1,600</td>
+                  <td class="num">450</td>
+                  <td class="num">2,050</td>
+                </tr>
+                <tr>
+                  <th scope="row">Overcast</th>
+                  <td class="num">1,205</td>
+                  <td class="num">602</td>
+                  <td class="num">1,807</td>
+                </tr>
+                <tr>
+                  <th scope="row">Foggy</th>
+                  <td class="num muted">—</td>
+                  <td class="num">600</td>
+                  <td class="num">600</td>
+                </tr>
+                <tr>
+                  <th scope="row">Sun / sharp shadows</th>
+                  <td class="num">70</td>
+                  <td class="num">150</td>
+                  <td class="num">220</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row">All</th>
+                  <td class="num">10,230</td>
+                  <td class="num">3,084</td>
+                  <td class="num">13,314</td>
+                </tr>
+              </tfoot>
+            </table>
+
+            <div class="download">
+              <h3>Download</h3>
+              <p>
+                The dataset is released in YOLO format on
+                <a href="https://huggingface.co/datasets/mehmetkeremturkcan/constellation_urban_intersection_dataset"
+                  target="_blank" rel="noopener">Hugging&nbsp;Face</a>, with a subset also on
+                <a href="https://drive.google.com/drive/folders/11k-EDDusIvvQB0Ss46c-_7GX3jvjWw4B" target="_blank"
+                  rel="noopener">Google&nbsp;Drive</a>. Dataset configs and training and evaluation scripts are on
+                <a href="https://github.com/zk2172-columbia/constellation-dataset" target="_blank"
+                  rel="noopener">GitHub</a>.
+              </p>
+              <p class="download__license">License: <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/"
+                  target="_blank" rel="noopener">CC BY-NC-SA 3.0</a></p>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
 
-  <!-- Teaser video-->
-  <section class="hero teaser">
-    <div class="container is-max-desktop">
-      <div class="hero-body">
-        <video poster="" id="tree" autoplay controls muted loop height="100%">
-          <!-- Your video here -->
-          <source src="static/videos/base2.mp4" type="video/mp4">
-        </video>
-        <h2 class="subtitle has-text-centered">
-          We introduce Constellation, a dataset of 13K images suitable for research on detection of objects in dense
-          urban streetscapes observed from high-elevation cameras, collected for a variety of temporal conditions. The
-          dataset addresses the need for curated data to explore problems in small object detection exemplified by the
-          limited pixel footprint of pedestrians observed tens of meters from above. It enables the testing of object
-          detection models for variations in lighting, building shadows, weather, and scene dynamics.
-        </h2>
+    <!-- Results -->
+    <section class="section" id="results">
+      <div class="wrap section__grid">
+        <h2 class="section__label">Findings</h2>
+        <div class="prose">
+          <ol class="findings">
+            <li>
+              <strong>Small pedestrians are the hard case.</strong>
+              Contemporary detectors reach 10% lower AP on pedestrians than on vehicles.
+            </li>
+            <li>
+              <strong>Pretraining on similar data helps.</strong>
+              Pretraining on structurally similar datasets increases mAP by 1.8%.
+            </li>
+            <li>
+              <strong>Domain-specific training pays off.</strong>
+              Tailored data augmentations and pseudo-labels from the best models further improve performance.
+            </li>
+            <li>
+              <strong>It runs on the edge.</strong>
+              Models were evaluated on Jetson Orin, Raspberry Pi 5 and mobile platforms; on a Jetson Orin Nano the
+              best edge model reaches 94.5% mAP at 27.5 ms with TensorRT.
+            </li>
+            <li>
+              <strong>Intersections change over time.</strong>
+              Models trained on data from different time intervals show performance drift as conditions at the
+              intersection change.
+            </li>
+          </ol>
+        </div>
+
+        <figure class="figure figure--content">
+          <img src="static/images/constellation2.png" width="1579" height="596" loading="lazy"
+            alt="Two plots of mAP@0.5 against training epochs for YOLOv8x and YOLOv8n. The COCO+VisDrone pretrained model is highest in both.">
+          <figcaption><strong>Figure 3.</strong> mAP@0.5 during training for extra-large (left) and nano (right)
+            YOLOv8 models initialized from different pretraining datasets.</figcaption>
+        </figure>
       </div>
-    </div>
-  </section>
-  <!-- End teaser video -->
+    </section>
 
-  <!-- Paper abstract -->
-  <section class="section hero is-light">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3">Abstract</h2>
-          <div class="content has-text-justified">
-            <p>
-              We evaluate contemporary object detection architectures on the dataset, observing that state-of-the-art
-              methods have lower performance in detecting small pedestrians compared to vehicles, corresponding to a 10%
-              difference in average precision (AP). Using structurally similar datasets for pretraining the models
-              results in an increase of 1.8% mean AP (mAP). We further find that incorporating domain-specific data
-              augmentations helps improve model performance. Using pseudo-labeled data, obtained from inference outcomes
-              of the best-performing models, improves the performance of the models. Finally, comparing the models
-              trained using the data collected in two different time intervals, we find a performance drift in models
-              due to the changes in intersection conditions over time.
-            </p>
-          </div>
+
+    <!-- Models -->
+    <section class="section section--tint" id="models">
+      <div class="wrap section__grid">
+        <h2 class="section__label">Pretrained models</h2>
+        <div class="prose">
+          <p>
+            All models below are fine-tuned on Constellation and available as PyTorch weights. The
+            <a href="https://drive.google.com/drive/folders/1RLHkXApuIHzqgoH8CTOtXNt5yfp81sWn" target="_blank"
+              rel="noopener">full model directory</a> can also be downloaded at once, and
+            <a href="https://github.com/zk2172-columbia/constellation-dataset#model-zoo" target="_blank"
+              rel="noopener">the repository</a> has the training and evaluation scripts used in the paper.
+          </p>
+        </div>
+
+        <div class="table-scroll figure--content">
+          <table class="table table--models">
+            <thead>
+              <tr>
+                <th scope="col">Architecture</th>
+                <th scope="col">Pretraining</th>
+                <th scope="col">Augmentation</th>
+                <th scope="col" class="num"><span class="nocase">mAP</span>@0.5</th>
+                <th scope="col"><span class="visually-hidden">Download</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="is-best">
+                <th scope="row">YOLOv8x <span class="tag">Best</span></th>
+                <td>VisDrone</td>
+                <td><span class="yes" aria-label="Yes">✓</span></td>
+                <td class="num">95.4</td>
+                <td class="dl"><a
+                    href="https://drive.google.com/file/d/1y552RLi7Hk_fqz70EgEaq58x0v7rfQmM/view?usp=sharing"
+                    target="_blank" rel="noopener">Weights</a></td>
+              </tr>
+              <tr>
+                <th scope="row">YOLOv8x</th>
+                <td>COCO</td>
+                <td><span class="yes" aria-label="Yes">✓</span></td>
+                <td class="num">94.7</td>
+                <td class="dl"><a
+                    href="https://drive.google.com/file/d/1iKIOzukvwBu-aSv2mCNpJqc3iIzW9ASj/view?usp=sharing"
+                    target="_blank" rel="noopener">Weights</a></td>
+              </tr>
+              <tr>
+                <th scope="row">YOLOv8n</th>
+                <td>VisDrone</td>
+                <td><span class="yes" aria-label="Yes">✓</span></td>
+                <td class="num">94.5</td>
+                <td class="dl"><a
+                    href="https://drive.google.com/file/d/1wRgVRFU_ibL59VhH9zCMreiWi-CUaojq/view?usp=sharing"
+                    target="_blank" rel="noopener">Weights</a></td>
+              </tr>
+              <tr>
+                <th scope="row">YOLOv8x (P2–P6)</th>
+                <td>COCO</td>
+                <td><span class="no" aria-label="No">—</span></td>
+                <td class="num">94.3</td>
+                <td class="dl"><a
+                    href="https://drive.google.com/file/d/1BFx9efEab7Nig7c7aOzK2y5KLBNukbzb/view?usp=sharing"
+                    target="_blank" rel="noopener">Weights</a></td>
+              </tr>
+              <tr>
+                <th scope="row">YOLOv8x</th>
+                <td>COCO</td>
+                <td><span class="no" aria-label="No">—</span></td>
+                <td class="num">93.0</td>
+                <td class="dl"><a
+                    href="https://drive.google.com/file/d/1eZITstx9uEbdARBlVOXblxs6KmafUFOb/view?usp=sharing"
+                    target="_blank" rel="noopener">Weights</a></td>
+              </tr>
+              <tr>
+                <th scope="row">DETR-x</th>
+                <td>COCO</td>
+                <td><span class="no" aria-label="No">—</span></td>
+                <td class="num">92.3</td>
+                <td class="dl"><a
+                    href="https://drive.google.com/file/d/1RFy98nhgGz9jfKfvnN7JU8Ruer1-pIGw/view?usp=sharing"
+                    target="_blank" rel="noopener">Weights</a></td>
+              </tr>
+              <tr>
+                <th scope="row">CFINet</th>
+                <td>COCO</td>
+                <td><span class="no" aria-label="No">—</span></td>
+                <td class="num">89.3</td>
+                <td class="dl"><a
+                    href="https://drive.google.com/file/d/1Df5kwaOKd9iCR8o4b96C5ZO9TJON0R7c/view?usp=sharing"
+                    target="_blank" rel="noopener">Weights</a></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </div>
-  </section>
-  <!-- End paper abstract -->
+    </section>
 
 
-  <!-- Image carousel -->
-  <section class="hero is-small">
-    <div class="hero-body">
-      <div class="container">
-        <div id="results-carousel" class="carousel results-carousel">
-          <div class="item">
-            <!-- Your image here -->
-            <img src="static/images/constellation_a2.png"
-              alt="Constellation contains different scenes, with changing time-of-day, weather conditions and background elements." />
-            <h2 class="subtitle has-text-centered">
-              Constellation contains different scenes, with changing time-of-day, weather conditions and background
-              elements for the same
-              camera. (a-d) Different weather and time-of-day conditions; (e-h) changes to the scene background.
-            </h2>
-          </div>
-          <div class="item">
-            <!-- Your image here -->
-            <img src="static/images/constellation2.png" alt="Example annotated frame from Constellation." />
-            <h2 class="subtitle has-text-centered">
-              Training curves for extra-large (left) vs. nano (right) YOLOv8 models with different pretraining datasets.
-            </h2>
-          </div>
+    <!-- Acknowledgement -->
+    <section class="section" id="acknowledgement">
+      <div class="wrap section__grid">
+        <h2 class="section__label">Acknowledgement</h2>
+        <div class="prose">
+          <p>
+            This data was collected at the <a href="https://advancedwireless.org/" target="_blank"
+              rel="noopener">PAWR</a> <a href="https://www.cosmos-lab.org/" target="_blank" rel="noopener">COSMOS
+              testbed</a> at <a href="https://www.columbia.edu/" target="_blank" rel="noopener">Columbia
+              University</a>.
+          </p>
         </div>
       </div>
-    </div>
-  </section>
-  <!-- End image carousel -->
+    </section>
 
 
-  <!-- Paper poster -->
-  <section class="hero is-small is-light">
-    <div class="hero-body">
-      <div class="container">
-        <h2 class="title">Poster</h2>
+    <!-- Citation -->
+    <section class="section section--tint" id="citation">
+      <div class="wrap section__grid">
+        <h2 class="section__label">Citation</h2>
+        <div class="prose">
+          <p class="reference">
+            M. K. Turkcan, C. Zang, S. Narasimhan, G. H. Je, B. Yu, M. Ghasemi, J. Ghaderi, G. Zussman and Z. Kostic.
+            Constellation Dataset: Benchmarking High-Altitude Object Detection for an Urban Intersection.
+            <em>International Journal of Computer Vision</em>, 134(10):429, 2026.
+            <a href="https://doi.org/10.1007/s11263-026-03029-1" target="_blank"
+              rel="noopener">doi:10.1007/s11263-026-03029-1</a>
+          </p>
+        </div>
 
-        <iframe src="static/pdfs/constellation.pdf" width="100%" height="550">
-        </iframe>
-
+        <div class="bibtex" id="BibTeX">
+          <div class="bibtex__bar">
+            <span>BibTeX</span>
+            <button class="copy" type="button" data-copy="bibtex-code">
+              <svg class="icon icon--copy" aria-hidden="true"><use href="#i-copy" /></svg>
+              <svg class="icon icon--check" aria-hidden="true"><use href="#i-check" /></svg>
+              <span class="copy__label">Copy</span>
+            </button>
+          </div>
+          <pre><code id="bibtex-code">@article{turkcan2026constellation,
+  title={Constellation dataset: Benchmarking high-altitude object detection for an urban intersection},
+  author={Turkcan, Mehmet Kerem and Zang, Chengbo and Narasimhan, Sanjeev and Je, Gyung Hyun and Yu, Bo and Ghasemi, Mahshid and Ghaderi, Javad and Zussman, Gil and Kostic, Zoran},
+  journal={International Journal of Computer Vision},
+  volume={134},
+  number={10},
+  pages={429},
+  year={2026},
+  publisher={Springer}
+}</code></pre>
+        </div>
       </div>
-    </div>
-  </section>
-  <!--End paper poster -->
+    </section>
 
-
-  <!--BibTex citation -->
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <h2 class="title">BibTeX</h2>
-      <pre><code>@inproceedings{Turkcan2024Constellation,
-        author = {Turkcan, Mehmet Kerem and Zang, Chengbo and Narasimhan, Sanjeev and Je, Gyung Hyun and Yu, Bo and Ghasemi, Mahshid and Zussman, Gil and Ghaderi, Javad and Kostic, Zoran},
-        title = {Constellation: Benchmarking High-Altitude Object Detection for an Urban Intersection},
-        booktitle = {In Preparation},
-        year = {2024},
-        note = {In Preparation},
-      }</code></pre>
-    </div>
-  </section>
-  <!--End BibTex citation -->
+  </main>
 
 
   <footer class="footer">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-8">
-          <div class="content">
-
-            <p>
-              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
-                target="_blank">Academic Project Page Template</a> which was adopted from the <a
-                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-              You are free to borrow the of this website, we just ask that you link back to this page in the footer.
-              <br> This website is licensed under a <a rel="license"
-                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
-                Commons Attribution-ShareAlike 4.0 International License</a>.
-            </p>
-
-          </div>
-        </div>
-      </div>
+    <div class="wrap footer__inner">
+      <p>
+        This page is adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+          target="_blank" rel="noopener">Academic Project Page Template</a>, which builds on the
+        <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+      </p>
+      <p>
+        Website licensed under a <a rel="license noopener" href="https://creativecommons.org/licenses/by-sa/4.0/"
+          target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
     </div>
   </footer>
-
-  <!-- Statcounter tracking code -->
-
-  <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-  <!-- End of Statcounter Code -->
 
 </body>
 
