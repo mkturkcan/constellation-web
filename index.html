@@ -181,7 +181,7 @@
       <ul class="topbar__links">
         <li><a href="#abstract">Abstract</a></li>
         <li><a href="#dataset">Dataset</a></li>
-        <li><a href="#results">Findings</a></li>
+        <li><a href="#results">Benchmarks</a></li>
         <li><a href="#models">Models</a></li>
         <li><a href="#citation">Cite</a></li>
       </ul>
@@ -241,35 +241,14 @@
 
     <!-- Teaser video -->
     <section class="teaser wrap" aria-label="Teaser video">
-      <video poster="static/images/teaser-poster.jpg" autoplay muted loop playsinline controls preload="metadata"
-        aria-label="Top-down footage of the Constellation intersection under different conditions">
-        <source src="static/videos/base2.mp4" type="video/mp4">
-      </video>
-      <p class="teaser__lead">
-        Constellation is a dataset of <strong>13K images</strong> for detecting objects in dense urban streetscapes
-        seen from high-elevation cameras. It addresses small object detection, where pedestrians observed tens of
-        meters from above occupy only a handful of pixels, across changing lighting, building shadows, weather and
-        scene dynamics.
-      </p>
-
-      <dl class="stats">
-        <div class="stat">
-          <dt>Annotated images</dt>
-          <dd>13,314</dd>
-        </div>
-        <div class="stat">
-          <dt>Lower AP for pedestrians than vehicles</dt>
-          <dd>10%</dd>
-        </div>
-        <div class="stat">
-          <dt>Best mAP@0.5, at 7.08&nbsp;ms on an A100</dt>
-          <dd>95.4%</dd>
-        </div>
-        <div class="stat">
-          <dt>On Jetson Orin Nano with TensorRT, at 94.5% mAP</dt>
-          <dd>27.5&nbsp;ms</dd>
-        </div>
-      </dl>
+      <figure class="figure">
+        <video poster="static/images/teaser-poster.jpg" autoplay muted loop playsinline controls preload="metadata"
+          aria-label="Top-down footage of the Constellation intersection under different conditions">
+          <source src="static/videos/base2.mp4" type="video/mp4">
+        </video>
+        <figcaption>Footage from the Constellation camera, mounted high above an intersection in Manhattan, on
+          different days and under different lighting and pavement conditions.</figcaption>
+      </figure>
     </section>
 
 
@@ -309,18 +288,20 @@
     <!-- Dataset -->
     <section class="section section--tint" id="dataset">
       <div class="wrap section__grid">
-        <h2 class="section__label">The dataset</h2>
+        <h2 class="section__label">Dataset</h2>
         <div class="prose">
           <p>
-            Constellation was collected from a single high-elevation camera overlooking a busy intersection in New York
-            City, over a period spanning multiple years. Every image is annotated with bounding boxes for
-            <strong>pedestrians</strong> and <strong>vehicles</strong>. The same viewpoint is seen at dawn, in daylight,
-            in rain, fog and at night, and through changes to the street itself: faded markings, an unpaved surface
-            and fresh repaving.
+            Constellation was recorded by a single camera mounted high above a busy intersection in Manhattan, New
+            York City. It contains 13,314 annotated frames drawn from 28 time intervals: 7,350 frames from videos
+            captured in 2019 and 2020, and 5,964 frames from ten scenes recorded in 2023. Every frame is annotated
+            with bounding boxes for two classes, pedestrians and vehicles. The intervals cover dawn, daylight, rain,
+            fog and night, as well as changes to the street itself, from faded markings to an unpaved surface and
+            repaving (Figure&nbsp;1).
           </p>
           <p>
-            The camera is deliberately installed at an altitude at which pedestrian faces and vehicle license plates
-            cannot be resolved, so the data is privacy-preserving by construction.
+            The training and test sets are separated in time, and no interval appears in both. The camera is
+            deliberately installed at an altitude at which pedestrian faces and vehicle license plates cannot be
+            resolved.
           </p>
         </div>
 
@@ -339,116 +320,442 @@
               compared to vehicles (blue).</figcaption>
           </figure>
 
-          <div class="split__table">
-            <table class="table">
-              <caption><strong>Table 1.</strong> Images per split, grouped by weather condition.</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Condition</th>
-                  <th scope="col" class="num">Train</th>
-                  <th scope="col" class="num">Test</th>
-                  <th scope="col" class="num">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Sunny</th>
-                  <td class="num">7,355</td>
-                  <td class="num">1,282</td>
-                  <td class="num">8,637</td>
-                </tr>
-                <tr>
-                  <th scope="row">Night</th>
-                  <td class="num">1,600</td>
-                  <td class="num">450</td>
-                  <td class="num">2,050</td>
-                </tr>
-                <tr>
-                  <th scope="row">Overcast</th>
-                  <td class="num">1,205</td>
-                  <td class="num">602</td>
-                  <td class="num">1,807</td>
-                </tr>
-                <tr>
-                  <th scope="row">Foggy</th>
-                  <td class="num muted">—</td>
-                  <td class="num">600</td>
-                  <td class="num">600</td>
-                </tr>
-                <tr>
-                  <th scope="row">Sun / sharp shadows</th>
-                  <td class="num">70</td>
-                  <td class="num">150</td>
-                  <td class="num">220</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th scope="row">All</th>
-                  <td class="num">10,230</td>
-                  <td class="num">3,084</td>
-                  <td class="num">13,314</td>
-                </tr>
-              </tfoot>
-            </table>
-
-            <div class="download">
-              <h3>Download</h3>
-              <p>
-                The dataset is released in YOLO format on
-                <a href="https://huggingface.co/datasets/mehmetkeremturkcan/constellation_urban_intersection_dataset"
-                  target="_blank" rel="noopener">Hugging&nbsp;Face</a>, with a subset also on
-                <a href="https://drive.google.com/drive/folders/11k-EDDusIvvQB0Ss46c-_7GX3jvjWw4B" target="_blank"
-                  rel="noopener">Google&nbsp;Drive</a>. Dataset configs and training and evaluation scripts are on
-                <a href="https://github.com/zk2172-columbia/constellation-dataset" target="_blank"
-                  rel="noopener">GitHub</a>.
-              </p>
-              <p class="download__license">License: <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/"
-                  target="_blank" rel="noopener">CC BY-NC-SA 3.0</a></p>
+          <figure class="table-figure">
+            <figcaption><strong>Table 1.</strong> Dataset summary.</figcaption>
+            <div class="table-scroll">
+              <table class="table table--summary">
+                  <tbody>
+                    <tr>
+                      <th scope="row">Annotated frames</th>
+                      <td>13,314 (10,230 train, 3,084 test)</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Time intervals</th>
+                      <td>28 (19 train, 9 test)</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Acquisition</th>
+                      <td>7,350 frames from 2019–2020, 5,964 from 2023</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Classes</th>
+                      <td>Pedestrian, vehicle</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Test-set boxes</th>
+                      <td>14,229 pedestrians, 12,399 vehicles</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Weather stress tests</th>
+                      <td>Heavy rain (964 frames), heavy snow (600)</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Drift study</th>
+                      <td>4,731 frames from 2020, 4,716 from 2023</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Pseudo-labeled</th>
+                      <td>50,557 frames (BoxMask)</td>
+                    </tr>
+                  </tbody>
+              </table>
             </div>
+          </figure>
+        </div>
+
+        <div class="split">
+          <figure class="table-figure">
+            <figcaption><strong>Table 2.</strong> Frames per split, grouped by weather condition.</figcaption>
+            <div class="table-scroll">
+              <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Weather</th>
+                      <th scope="col" class="num">Train</th>
+                      <th scope="col" class="num">Test</th>
+                      <th scope="col" class="num">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Overcast</th>
+                      <td class="num">1,205</td>
+                      <td class="num">602</td>
+                      <td class="num">1,807</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Sunny</th>
+                      <td class="num">7,355</td>
+                      <td class="num">1,282</td>
+                      <td class="num">8,637</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Night</th>
+                      <td class="num">1,600</td>
+                      <td class="num">450</td>
+                      <td class="num">2,050</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Sun / sharp shadows</th>
+                      <td class="num">70</td>
+                      <td class="num">150</td>
+                      <td class="num">220</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Heavy fog</th>
+                      <td class="num">–</td>
+                      <td class="num">600</td>
+                      <td class="num">600</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th scope="row">All</th>
+                      <td class="num">10,230</td>
+                      <td class="num">3,084</td>
+                      <td class="num">13,314</td>
+                    </tr>
+                  </tfoot>
+              </table>
+            </div>
+          </figure>
+
+          <div class="download">
+            <h3>Download</h3>
+            <p>
+              The dataset is released in YOLO format on
+              <a href="https://huggingface.co/datasets/mehmetkeremturkcan/constellation_urban_intersection_dataset"
+                target="_blank" rel="noopener">Hugging&nbsp;Face</a>, with a subset also on
+              <a href="https://drive.google.com/drive/folders/11k-EDDusIvvQB0Ss46c-_7GX3jvjWw4B" target="_blank"
+                rel="noopener">Google&nbsp;Drive</a>. Dataset configs and training and evaluation scripts are on
+              <a href="https://github.com/zk2172-columbia/constellation-dataset" target="_blank"
+                rel="noopener">GitHub</a>.
+            </p>
+            <p class="download__license">License: <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/"
+                target="_blank" rel="noopener">CC BY-NC-SA 3.0</a></p>
           </div>
         </div>
       </div>
     </section>
 
 
-    <!-- Results -->
+    <!-- Benchmarks -->
     <section class="section" id="results">
       <div class="wrap section__grid">
-        <h2 class="section__label">Findings</h2>
+        <h2 class="section__label">Benchmarks</h2>
         <div class="prose">
-          <ol class="findings">
-            <li>
-              <strong>Small pedestrians are the hard case.</strong>
-              Contemporary detectors reach 10% lower AP on pedestrians than on vehicles.
-            </li>
-            <li>
-              <strong>Pretraining on similar data helps.</strong>
-              Pretraining on structurally similar datasets increases mAP by 1.8%.
-            </li>
-            <li>
-              <strong>Domain-specific training pays off.</strong>
-              Tailored data augmentations and pseudo-labels from the best models further improve performance.
-            </li>
-            <li>
-              <strong>It runs on the edge.</strong>
-              Models were evaluated on Jetson Orin, Raspberry Pi 5 and mobile platforms; on a Jetson Orin Nano the
-              best edge model reaches 94.5% mAP at 27.5 ms with TensorRT.
-            </li>
-            <li>
-              <strong>Intersections change over time.</strong>
-              Models trained on data from different time intervals show performance drift as conditions at the
-              intersection change.
-            </li>
-          </ol>
+          <p>
+            We report average precision at an IoU threshold of 0.5 for each class (AP@0.5) and their mean
+            (mAP@0.5) on the Constellation test set, since IoU is highly sensitive to small localization errors on
+            small boxes. Unless noted otherwise, models are trained for 125 epochs from COCO-pretrained weights. All
+            results are reproduced from the paper.
+          </p>
         </div>
 
-        <figure class="figure figure--content">
-          <img src="static/images/constellation2.png" width="1579" height="596" loading="lazy"
-            alt="Two plots of mAP@0.5 against training epochs for YOLOv8x and YOLOv8n. The COCO+VisDrone pretrained model is highest in both.">
-          <figcaption><strong>Figure 3.</strong> mAP@0.5 during training for extra-large (left) and nano (right)
-            YOLOv8 models initialized from different pretraining datasets.</figcaption>
-        </figure>
+        <div class="subsection">
+          <h3>Detector benchmark</h3>
+          <p>
+            Vehicle AP is close to saturation for most architectures, while pedestrian AP varies by more than 25
+            points. Training at twice the input resolution gives the largest gains on pedestrians, and a YOLOv8x
+            with P2–P6 detection layers is competitive at real-time latencies.
+          </p>
+          <figure class="table-figure">
+            <figcaption><strong>Table 3.</strong> Per-class AP@0.5, mAP@0.5 and PyTorch inference time on an A100 for architectures pretrained on COCO. 2x: trained at twice the input resolution with bilinear upscaling; SR: Real-ESRGAN upscaling instead. P2, P6: added detection layers. Best in bold.</figcaption>
+            <div class="table-scroll">
+              <table class="table">
+                <thead>
+                <tr><th scope="col" rowspan="2">Model</th><th scope="colgroup" colspan="3" class="group">AP@0.5</th><th scope="col" rowspan="2" class="num">Time (ms)</th></tr>
+                <tr><th scope="col" class="num">Pedestrian</th><th scope="col" class="num">Vehicle</th><th scope="col" class="num">Mean</th></tr>
+                </thead>
+                <tbody>
+                  <tr class="subhead"><th scope="colgroup" colspan="5">YOLOv8</th></tr>
+                  <tr><th scope="row">YOLOv8n</th><td class="num">86.1</td><td class="num">97.8</td><td class="num">92.0</td><td class="num"><b>5.4</b></td></tr>
+                  <tr><th scope="row">YOLOv8x</th><td class="num">87.4</td><td class="num">98.6</td><td class="num">93.0</td><td class="num">11.5</td></tr>
+                  <tr><th scope="row">YOLOv8n <span class="nw">(2x)</span></th><td class="num">91.2</td><td class="num">98.5</td><td class="num">94.8</td><td class="num">7.2</td></tr>
+                  <tr><th scope="row">YOLOv8x <span class="nw">(2x)</span></th><td class="num">91.2</td><td class="num">98.4</td><td class="num">94.8</td><td class="num">43.6</td></tr>
+                  <tr><th scope="row">YOLOv8n <span class="nw">(2x+SR)</span></th><td class="num">90.1</td><td class="num">98.4</td><td class="num">94.2</td><td class="num">7.2</td></tr>
+                  <tr><th scope="row">YOLOv8x <span class="nw">(2x+SR)</span></th><td class="num"><b>91.3</b></td><td class="num"><b>98.7</b></td><td class="num"><b>95.0</b></td><td class="num">43.6</td></tr>
+                  <tr><th scope="row">YOLOv8x <span class="nw">(P2)</span></th><td class="num">89.5</td><td class="num">98.6</td><td class="num">94.0</td><td class="num">15.1</td></tr>
+                  <tr><th scope="row">YOLOv8x <span class="nw">(P6)</span></th><td class="num">89.4</td><td class="num"><b>98.7</b></td><td class="num">94.0</td><td class="num">7.6</td></tr>
+                  <tr><th scope="row">YOLOv8x <span class="nw">(P2–P6)</span></th><td class="num">89.9</td><td class="num"><b>98.7</b></td><td class="num">94.3</td><td class="num">24.5</td></tr>
+                </tbody>
+                <tbody>
+                  <tr class="subhead"><th scope="colgroup" colspan="5">Other detectors</th></tr>
+                  <tr><th scope="row">RT-DETR-l</th><td class="num">86.5</td><td class="num">98.1</td><td class="num">92.6</td><td class="num">9.8</td></tr>
+                  <tr><th scope="row">RT-DETR-x</th><td class="num">87.3</td><td class="num">97.8</td><td class="num">92.3</td><td class="num">14.5</td></tr>
+                  <tr><th scope="row">YOLOv7</th><td class="num">78.8</td><td class="num">98.2</td><td class="num">92.7</td><td class="num">15.4</td></tr>
+                  <tr><th scope="row">CFINet</th><td class="num">82.8</td><td class="num">95.8</td><td class="num">89.3</td><td class="num">31.4</td></tr>
+                  <tr><th scope="row">STD</th><td class="num">79.9</td><td class="num">90.8</td><td class="num">85.3</td><td class="num">14.2</td></tr>
+                  <tr><th scope="row">LSKNet-S</th><td class="num">64.8</td><td class="num">90.2</td><td class="num">77.5</td><td class="num">31.1</td></tr>
+                  <tr><th scope="row">PP-YOLOE+</th><td class="num">88.5</td><td class="num">97.7</td><td class="num">93.1</td><td class="num">21.6</td></tr>
+                  <tr><th scope="row">RTMDet</th><td class="num">87.5</td><td class="num">98.3</td><td class="num">92.9</td><td class="num">24.5</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </figure>
+        </div>
+
+        <div class="subsection">
+          <h3>Domain gap</h3>
+          <p>
+            Detectors that were not trained on Constellation transfer poorly, particularly for pedestrians. The
+            strongest zero-shot model, SAM3, reaches 64.6 pedestrian AP. YOLOv8x trained on VisDrone reaches 27.3,
+            and trained on CARLA renders of the same camera placement, 20.6, against 87.4 for the same
+            architecture trained on Constellation.
+          </p>
+          <figure class="figure">
+          <div class="dotplot">
+            <div class="dotplot__legend">
+              <span><span class="dot dot--ped" aria-hidden="true"></span>Pedestrian AP@0.5</span>
+              <span><span class="dot dot--veh" aria-hidden="true"></span>Vehicle AP@0.5</span>
+            </div>
+            <div class="dotplot__body">
+              <div class="dotplot__grid" aria-hidden="true"><span style="left:0%"></span><span style="left:20%"></span><span style="left:40%"></span><span style="left:60%"></span><span style="left:80%"></span><span style="left:100%"></span></div>
+              <div class="dotplot__group">Trained on Constellation</div>
+              <div class="dotplot__row is-ref">
+                <div class="dotplot__label">YOLOv8x</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:87.4%;width:11.2%"></span>
+                  <span class="dotplot__value" style="left:87.4%" aria-hidden="true">87.4</span>
+                  <span class="dot dot--ped" style="left:87.4%" tabindex="0" data-model="YOLOv8x trained on Constellation" data-series="pedestrian AP@0.5" data-value="87.4" aria-label="YOLOv8x trained on Constellation, pedestrian AP@0.5: 87.4"></span>
+                  <span class="dot dot--veh" style="left:98.6%" tabindex="0" data-model="YOLOv8x trained on Constellation" data-series="vehicle AP@0.5" data-value="98.6" aria-label="YOLOv8x trained on Constellation, vehicle AP@0.5: 98.6"></span>
+                </div>
+              </div>
+              <div class="dotplot__group">Open-vocabulary detectors, zero-shot</div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">SAM3</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:64.6%;width:33.2%"></span>
+                  <span class="dotplot__value" style="left:64.6%" aria-hidden="true">64.6</span>
+                  <span class="dot dot--ped" style="left:64.6%" tabindex="0" data-model="SAM3" data-series="pedestrian AP@0.5" data-value="64.6" aria-label="SAM3, pedestrian AP@0.5: 64.6"></span>
+                  <span class="dot dot--veh" style="left:97.8%" tabindex="0" data-model="SAM3" data-series="vehicle AP@0.5" data-value="97.8" aria-label="SAM3, vehicle AP@0.5: 97.8"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">YOLOv8x-Worldv2</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:60.4%;width:25.0%"></span>
+                  <span class="dot dot--ped" style="left:60.4%" tabindex="0" data-model="YOLOv8x-Worldv2" data-series="pedestrian AP@0.5" data-value="60.4" aria-label="YOLOv8x-Worldv2, pedestrian AP@0.5: 60.4"></span>
+                  <span class="dot dot--veh" style="left:85.4%" tabindex="0" data-model="YOLOv8x-Worldv2" data-series="vehicle AP@0.5" data-value="85.4" aria-label="YOLOv8x-Worldv2, vehicle AP@0.5: 85.4"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">MM Grounding DINO (large)</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:56.0%;width:30.4%"></span>
+                  <span class="dot dot--ped" style="left:56.0%" tabindex="0" data-model="MM Grounding DINO (large)" data-series="pedestrian AP@0.5" data-value="56.0" aria-label="MM Grounding DINO (large), pedestrian AP@0.5: 56.0"></span>
+                  <span class="dot dot--veh" style="left:86.4%" tabindex="0" data-model="MM Grounding DINO (large)" data-series="vehicle AP@0.5" data-value="86.4" aria-label="MM Grounding DINO (large), vehicle AP@0.5: 86.4"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">LLMDet</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:55.6%;width:24.8%"></span>
+                  <span class="dot dot--ped" style="left:55.6%" tabindex="0" data-model="LLMDet" data-series="pedestrian AP@0.5" data-value="55.6" aria-label="LLMDet, pedestrian AP@0.5: 55.6"></span>
+                  <span class="dot dot--veh" style="left:80.4%" tabindex="0" data-model="LLMDet" data-series="vehicle AP@0.5" data-value="80.4" aria-label="LLMDet, vehicle AP@0.5: 80.4"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">YOLOE-v11L</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:48.2%;width:35.6%"></span>
+                  <span class="dot dot--ped" style="left:48.2%" tabindex="0" data-model="YOLOE-v11L" data-series="pedestrian AP@0.5" data-value="48.2" aria-label="YOLOE-v11L, pedestrian AP@0.5: 48.2"></span>
+                  <span class="dot dot--veh" style="left:83.8%" tabindex="0" data-model="YOLOE-v11L" data-series="vehicle AP@0.5" data-value="83.8" aria-label="YOLOE-v11L, vehicle AP@0.5: 83.8"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">Grounding DINO (base)</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:43.9%;width:24.3%"></span>
+                  <span class="dot dot--ped" style="left:43.9%" tabindex="0" data-model="Grounding DINO (base)" data-series="pedestrian AP@0.5" data-value="43.9" aria-label="Grounding DINO (base), pedestrian AP@0.5: 43.9"></span>
+                  <span class="dot dot--veh" style="left:68.2%" tabindex="0" data-model="Grounding DINO (base)" data-series="vehicle AP@0.5" data-value="68.2" aria-label="Grounding DINO (base), vehicle AP@0.5: 68.2"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">OmDet</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:38.6%;width:48.8%"></span>
+                  <span class="dot dot--ped" style="left:38.6%" tabindex="0" data-model="OmDet" data-series="pedestrian AP@0.5" data-value="38.6" aria-label="OmDet, pedestrian AP@0.5: 38.6"></span>
+                  <span class="dot dot--veh" style="left:87.4%" tabindex="0" data-model="OmDet" data-series="vehicle AP@0.5" data-value="87.4" aria-label="OmDet, vehicle AP@0.5: 87.4"></span>
+                </div>
+              </div>
+              <div class="dotplot__group">YOLOv8x trained on another dataset</div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">COCO</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:53.3%;width:34.3%"></span>
+                  <span class="dot dot--ped" style="left:53.3%" tabindex="0" data-model="YOLOv8x trained on COCO" data-series="pedestrian AP@0.5" data-value="53.3" aria-label="YOLOv8x trained on COCO, pedestrian AP@0.5: 53.3"></span>
+                  <span class="dot dot--veh" style="left:87.6%" tabindex="0" data-model="YOLOv8x trained on COCO" data-series="vehicle AP@0.5" data-value="87.6" aria-label="YOLOv8x trained on COCO, vehicle AP@0.5: 87.6"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">OpenImages v7</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:35.9%;width:7.1%"></span>
+                  <span class="dot dot--ped" style="left:35.9%" tabindex="0" data-model="YOLOv8x trained on OpenImages v7" data-series="pedestrian AP@0.5" data-value="35.9" aria-label="YOLOv8x trained on OpenImages v7, pedestrian AP@0.5: 35.9"></span>
+                  <span class="dot dot--veh" style="left:43.0%" tabindex="0" data-model="YOLOv8x trained on OpenImages v7" data-series="vehicle AP@0.5" data-value="43.0" aria-label="YOLOv8x trained on OpenImages v7, vehicle AP@0.5: 43.0"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">VisDrone</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:27.3%;width:61.3%"></span>
+                  <span class="dot dot--ped" style="left:27.3%" tabindex="0" data-model="YOLOv8x trained on VisDrone" data-series="pedestrian AP@0.5" data-value="27.3" aria-label="YOLOv8x trained on VisDrone, pedestrian AP@0.5: 27.3"></span>
+                  <span class="dot dot--veh" style="left:88.6%" tabindex="0" data-model="YOLOv8x trained on VisDrone" data-series="vehicle AP@0.5" data-value="88.6" aria-label="YOLOv8x trained on VisDrone, vehicle AP@0.5: 88.6"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">CARLA</div>
+                <div class="dotplot__track">
+                  <span class="dotplot__span" style="left:20.6%;width:42.3%"></span>
+                  <span class="dot dot--ped" style="left:20.6%" tabindex="0" data-model="YOLOv8x trained on CARLA" data-series="pedestrian AP@0.5" data-value="20.6" aria-label="YOLOv8x trained on CARLA, pedestrian AP@0.5: 20.6"></span>
+                  <span class="dot dot--veh" style="left:62.9%" tabindex="0" data-model="YOLOv8x trained on CARLA" data-series="vehicle AP@0.5" data-value="62.9" aria-label="YOLOv8x trained on CARLA, vehicle AP@0.5: 62.9"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">EuroCity Persons</div>
+                <div class="dotplot__track">
+                  <span class="dot dot--ped" style="left:19.5%" tabindex="0" data-model="YOLOv8x trained on EuroCity Persons" data-series="pedestrian AP@0.5" data-value="19.5" aria-label="YOLOv8x trained on EuroCity Persons, pedestrian AP@0.5: 19.5"></span>
+                </div>
+              </div>
+              <div class="dotplot__row">
+                <div class="dotplot__label">CityPersons</div>
+                <div class="dotplot__track">
+                  <span class="dot dot--ped" style="left:11.2%" tabindex="0" data-model="YOLOv8x trained on CityPersons" data-series="pedestrian AP@0.5" data-value="11.2" aria-label="YOLOv8x trained on CityPersons, pedestrian AP@0.5: 11.2"></span>
+                </div>
+              </div>
+            </div>
+            <div class="dotplot__axis" aria-hidden="true"><span style="left:0%">0</span><span style="left:20%">20</span><span style="left:40%">40</span><span style="left:60%">60</span><span style="left:80%">80</span><span style="left:100%">100</span></div>
+            <div class="dotplot__axis-title" aria-hidden="true">AP@0.5 on the Constellation test set</div>
+            <div class="dotplot__tip" hidden></div>
+          </div>
+          <figcaption><strong>Figure 3.</strong> Detectors that were not trained on Constellation, compared with YOLOv8x trained on it. Each line spans the gap between a model&rsquo;s pedestrian and vehicle AP. EuroCity Persons and CityPersons have no vehicle class.</figcaption>
+          <details class="table-view">
+            <summary>Show as table</summary>
+            <div class="table-scroll">
+            <table class="table">
+              <thead><tr><th scope="col">Model</th><th scope="col" class="num">Pedestrian</th><th scope="col" class="num">Vehicle</th><th scope="col" class="num">Mean</th></tr></thead>
+              <tbody>
+              <tr class="subhead"><th scope="colgroup" colspan="4">Trained on Constellation</th></tr>
+              <tr><th scope="row">YOLOv8x</th><td class="num">87.4</td><td class="num">98.6</td><td class="num">93.0</td></tr>
+              </tbody>
+              <tbody>
+              <tr class="subhead"><th scope="colgroup" colspan="4">Open-vocabulary detectors, zero-shot</th></tr>
+              <tr><th scope="row">SAM3</th><td class="num">64.6</td><td class="num">97.8</td><td class="num">81.2</td></tr>
+              <tr><th scope="row">YOLOv8x-Worldv2</th><td class="num">60.4</td><td class="num">85.4</td><td class="num">72.9</td></tr>
+              <tr><th scope="row">MM Grounding DINO (large)</th><td class="num">56.0</td><td class="num">86.4</td><td class="num">71.2</td></tr>
+              <tr><th scope="row">LLMDet</th><td class="num">55.6</td><td class="num">80.4</td><td class="num">68.0</td></tr>
+              <tr><th scope="row">YOLOE-v11L</th><td class="num">48.2</td><td class="num">83.8</td><td class="num">66.0</td></tr>
+              <tr><th scope="row">Grounding DINO (base)</th><td class="num">43.9</td><td class="num">68.2</td><td class="num">56.0</td></tr>
+              <tr><th scope="row">OmDet</th><td class="num">38.6</td><td class="num">87.4</td><td class="num">63.0</td></tr>
+              </tbody>
+              <tbody>
+              <tr class="subhead"><th scope="colgroup" colspan="4">YOLOv8x trained on another dataset</th></tr>
+              <tr><th scope="row">COCO</th><td class="num">53.3</td><td class="num">87.6</td><td class="num">70.4</td></tr>
+              <tr><th scope="row">OpenImages v7</th><td class="num">35.9</td><td class="num">43.0</td><td class="num">39.4</td></tr>
+              <tr><th scope="row">VisDrone</th><td class="num">27.3</td><td class="num">88.6</td><td class="num">57.9</td></tr>
+              <tr><th scope="row">CARLA</th><td class="num">20.6</td><td class="num">62.9</td><td class="num">41.8</td></tr>
+              <tr><th scope="row">EuroCity Persons</th><td class="num">19.5</td><td class="num">–</td><td class="num">–</td></tr>
+              <tr><th scope="row">CityPersons</th><td class="num">11.2</td><td class="num">–</td><td class="num">–</td></tr>
+              </tbody>
+            </table>
+            </div>
+          </details>
+          </figure>
+        </div>
+
+        <div class="subsection">
+          <h3>Pretraining and augmentation</h3>
+          <p>
+            Pretraining on VisDrone before fine-tuning gives the best results for both model sizes (Figure&nbsp;4).
+            Augmentations that mimic the scene help pedestrians most: RandomShadow alone raises pedestrian AP from
+            87.4 to 90.0, and the full proposed set reaches 90.7. Combined with VisDrone pretraining, YOLOv8x reaches
+            92.0 pedestrian AP and 95.4 mAP@0.5 (Table&nbsp;4).
+          </p>
+          <figure class="figure">
+            <img src="static/images/constellation2.png" width="1579" height="596" loading="lazy"
+              alt="Two plots of mAP@0.5 against training epochs for YOLOv8x and YOLOv8n. The COCO+VisDrone pretrained model is highest in both.">
+            <figcaption><strong>Figure 4.</strong> mAP@0.5 during training for YOLOv8x (left) and YOLOv8n (right)
+              with different pretraining schemes. VisDrone pretraining is best for both, at 95.4 and 94.5
+              mAP@0.5.</figcaption>
+          </figure>
+          <figure class="table-figure">
+            <figcaption><strong>Table 4.</strong> YOLOv8x trained with the proposed augmentations, by pretraining source (AP@0.5).</figcaption>
+            <div class="table-scroll">
+              <table class="table table--compact">
+                <thead><tr><th scope="col">Pretraining</th><th scope="col" class="num">Pedestrian</th><th scope="col" class="num">Vehicle</th><th scope="col" class="num">Mean</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">COCO</th><td class="num">90.7</td><td class="num">98.6</td><td class="num">94.7</td></tr>
+                  <tr><th scope="row">COCO + CARLA</th><td class="num">90.1</td><td class="num">98.7</td><td class="num">94.4</td></tr>
+                  <tr><th scope="row">COCO + VisDrone</th><td class="num"><b>92.0</b></td><td class="num"><b>98.8</b></td><td class="num"><b>95.4</b></td></tr>
+                  <tr><th scope="row">COCO + SDD</th><td class="num">90.0</td><td class="num">98.6</td><td class="num">94.3</td></tr>
+                  <tr><th scope="row">Random initialization</th><td class="num">90.6</td><td class="num">98.7</td><td class="num">94.7</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </figure>
+        </div>
+
+        <div class="subsection">
+          <h3>Robustness to weather and time</h3>
+          <p>
+            Heavy snow and heavy rain are the hardest conditions for the best model, at 73.7 and 82.7 mAP@0.5
+            (Table&nbsp;5). Models also drift as the intersection changes: a model trained only on 2020 data loses
+            7.1 mAP@0.5 on 2023 data, and a model trained only on 2023 data loses 9.6 on 2020 data (Table&nbsp;6).
+          </p>
+          <div class="split">
+            <figure class="table-figure">
+              <figcaption><strong>Table 5.</strong> The best YOLOv8x model on weather-specific test sets (AP@0.5).</figcaption>
+              <div class="table-scroll">
+                <table class="table">
+                  <thead><tr><th scope="col">Test set</th><th scope="col" class="num">Frames</th><th scope="col" class="num">Pedestrian</th><th scope="col" class="num">Vehicle</th><th scope="col" class="num">Mean</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Heavy rain</th><td class="num">964</td><td class="num">76.0</td><td class="num">89.4</td><td class="num">82.7</td></tr>
+                    <tr><th scope="row">Heavy snow</th><td class="num">600</td><td class="num">56.5</td><td class="num">90.8</td><td class="num">73.7</td></tr>
+                    <tr><th scope="row">Heavy fog</th><td class="num">600</td><td class="num">93.4</td><td class="num">99.4</td><td class="num">96.4</td></tr>
+                    <tr><th scope="row">Night</th><td class="num">450</td><td class="num">81.1</td><td class="num">99.2</td><td class="num">90.2</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </figure>
+            <figure class="table-figure">
+              <figcaption><strong>Table 6.</strong> mAP@0.5 of YOLOv8x models trained on data from a single year.</figcaption>
+              <div class="table-scroll">
+                <table class="table">
+                  <thead><tr><th scope="col">Trained on</th><th scope="col" class="num">Test 2020</th><th scope="col" class="num">Test 2023</th><th scope="col" class="num">Test all</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">2020</th><td class="num"><b>96.8</b></td><td class="num">89.7</td><td class="num">92.1</td></tr>
+                    <tr><th scope="row">2023</th><td class="num">88.7</td><td class="num"><b>98.3</b></td><td class="num">94.8</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </figure>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Edge deployment</h3>
+          <p>
+            On a Jetson Orin Nano with TensorRT, YOLOv8n runs in 27.5 ms per frame and YOLOv8x in 111.6 ms. On a
+            Raspberry Pi 5 and an iPhone 13 Pro Max, the nano model is the practical choice (Table&nbsp;7). With
+            VisDrone pretraining, YOLOv8n reaches 94.5 mAP@0.5.
+          </p>
+          <figure class="table-figure">
+            <figcaption><strong>Table 7.</strong> Mean inference latency ± standard deviation in milliseconds over 100 Constellation images, with an A100 as reference. OOM: out of memory; n/s: not supported by the backend.</figcaption>
+            <div class="table-scroll">
+              <table class="table">
+                <thead><tr><th scope="col">Platform</th><th scope="col" class="num">YOLOv8n</th><th scope="col" class="num">YOLOv8x</th><th scope="col" class="num">YOLOv8x (P2–P6)</th><th scope="col" class="num">RT-DETR-x</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">A100 <span class="backend">TensorRT</span></th><td class="num">3.43<span class="pm"> ± 0.10</span></td><td class="num">7.08<span class="pm"> ± 0.07</span></td><td class="num">8.83<span class="pm"> ± 0.08</span></td><td class="num">7.75<span class="pm"> ± 0.10</span></td></tr>
+                  <tr><th scope="row">Jetson Orin Nano <span class="backend">TensorRT</span></th><td class="num">27.51<span class="pm"> ± 6.20</span></td><td class="num">111.55<span class="pm"> ± 9.82</span></td><td class="num">142.40<span class="pm"> ± 12.97</span></td><td class="num">120.87<span class="pm"> ± 20.15</span></td></tr>
+                  <tr><th scope="row">Rubik Pi 3 <span class="backend">LiteRT</span></th><td class="num">55.10<span class="pm"> ± 0.06</span></td><td class="num">818.99<span class="pm"> ± 5.23</span></td><td class="num">1,141.77<span class="pm"> ± 1.75</span></td><td class="num">n/s</td></tr>
+                  <tr><th scope="row">Raspberry Pi 5 <span class="backend">NCNN</span></th><td class="num">353.15<span class="pm"> ± 69.22</span></td><td class="num">2,325.67<span class="pm"> ± 77.18</span></td><td class="num">3,438.64<span class="pm"> ± 94.49</span></td><td class="num">n/s</td></tr>
+                  <tr><th scope="row">iPhone 13 Pro Max <span class="backend">WebAssembly</span></th><td class="num">372.60<span class="pm"> ± 5.10</span></td><td class="num">10,233.14<span class="pm"> ± 102.33</span></td><td class="num">OOM</td><td class="num">n/s</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </figure>
+        </div>
       </div>
     </section>
 
@@ -467,84 +774,87 @@
           </p>
         </div>
 
-        <div class="table-scroll figure--content">
-          <table class="table table--models">
-            <thead>
-              <tr>
-                <th scope="col">Architecture</th>
-                <th scope="col">Pretraining</th>
-                <th scope="col">Augmentation</th>
-                <th scope="col" class="num"><span class="nocase">mAP</span>@0.5</th>
-                <th scope="col"><span class="visually-hidden">Download</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="is-best">
-                <th scope="row">YOLOv8x <span class="tag">Best</span></th>
-                <td>VisDrone</td>
-                <td><span class="yes" aria-label="Yes">✓</span></td>
-                <td class="num">95.4</td>
-                <td class="dl"><a
-                    href="https://drive.google.com/file/d/1y552RLi7Hk_fqz70EgEaq58x0v7rfQmM/view?usp=sharing"
-                    target="_blank" rel="noopener">Weights</a></td>
-              </tr>
-              <tr>
-                <th scope="row">YOLOv8x</th>
-                <td>COCO</td>
-                <td><span class="yes" aria-label="Yes">✓</span></td>
-                <td class="num">94.7</td>
-                <td class="dl"><a
-                    href="https://drive.google.com/file/d/1iKIOzukvwBu-aSv2mCNpJqc3iIzW9ASj/view?usp=sharing"
-                    target="_blank" rel="noopener">Weights</a></td>
-              </tr>
-              <tr>
-                <th scope="row">YOLOv8n</th>
-                <td>VisDrone</td>
-                <td><span class="yes" aria-label="Yes">✓</span></td>
-                <td class="num">94.5</td>
-                <td class="dl"><a
-                    href="https://drive.google.com/file/d/1wRgVRFU_ibL59VhH9zCMreiWi-CUaojq/view?usp=sharing"
-                    target="_blank" rel="noopener">Weights</a></td>
-              </tr>
-              <tr>
-                <th scope="row">YOLOv8x (P2–P6)</th>
-                <td>COCO</td>
-                <td><span class="no" aria-label="No">—</span></td>
-                <td class="num">94.3</td>
-                <td class="dl"><a
-                    href="https://drive.google.com/file/d/1BFx9efEab7Nig7c7aOzK2y5KLBNukbzb/view?usp=sharing"
-                    target="_blank" rel="noopener">Weights</a></td>
-              </tr>
-              <tr>
-                <th scope="row">YOLOv8x</th>
-                <td>COCO</td>
-                <td><span class="no" aria-label="No">—</span></td>
-                <td class="num">93.0</td>
-                <td class="dl"><a
-                    href="https://drive.google.com/file/d/1eZITstx9uEbdARBlVOXblxs6KmafUFOb/view?usp=sharing"
-                    target="_blank" rel="noopener">Weights</a></td>
-              </tr>
-              <tr>
-                <th scope="row">DETR-x</th>
-                <td>COCO</td>
-                <td><span class="no" aria-label="No">—</span></td>
-                <td class="num">92.3</td>
-                <td class="dl"><a
-                    href="https://drive.google.com/file/d/1RFy98nhgGz9jfKfvnN7JU8Ruer1-pIGw/view?usp=sharing"
-                    target="_blank" rel="noopener">Weights</a></td>
-              </tr>
-              <tr>
-                <th scope="row">CFINet</th>
-                <td>COCO</td>
-                <td><span class="no" aria-label="No">—</span></td>
-                <td class="num">89.3</td>
-                <td class="dl"><a
-                    href="https://drive.google.com/file/d/1Df5kwaOKd9iCR8o4b96C5ZO9TJON0R7c/view?usp=sharing"
-                    target="_blank" rel="noopener">Weights</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <figure class="table-figure">
+          <figcaption><strong>Table 8.</strong> Released models and their mAP@0.5 on the Constellation test set. Augmentation: the proposed domain-specific augmentations.</figcaption>
+          <div class="table-scroll">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Architecture</th>
+                    <th scope="col">Pretraining</th>
+                    <th scope="col">Augmentation</th>
+                    <th scope="col" class="num">mAP@0.5</th>
+                    <th scope="col"><span class="visually-hidden">Download</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">YOLOv8x</th>
+                    <td>VisDrone</td>
+                    <td>Yes</td>
+                    <td class="num"><b>95.4</b></td>
+                    <td class="dl"><a
+                        href="https://drive.google.com/file/d/1y552RLi7Hk_fqz70EgEaq58x0v7rfQmM/view?usp=sharing"
+                        target="_blank" rel="noopener">Weights</a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">YOLOv8x</th>
+                    <td>COCO</td>
+                    <td>Yes</td>
+                    <td class="num">94.7</td>
+                    <td class="dl"><a
+                        href="https://drive.google.com/file/d/1iKIOzukvwBu-aSv2mCNpJqc3iIzW9ASj/view?usp=sharing"
+                        target="_blank" rel="noopener">Weights</a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">YOLOv8n</th>
+                    <td>VisDrone</td>
+                    <td>Yes</td>
+                    <td class="num">94.5</td>
+                    <td class="dl"><a
+                        href="https://drive.google.com/file/d/1wRgVRFU_ibL59VhH9zCMreiWi-CUaojq/view?usp=sharing"
+                        target="_blank" rel="noopener">Weights</a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">YOLOv8x <span class="nw">(P2–P6)</span></th>
+                    <td>COCO</td>
+                    <td>No</td>
+                    <td class="num">94.3</td>
+                    <td class="dl"><a
+                        href="https://drive.google.com/file/d/1BFx9efEab7Nig7c7aOzK2y5KLBNukbzb/view?usp=sharing"
+                        target="_blank" rel="noopener">Weights</a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">YOLOv8x</th>
+                    <td>COCO</td>
+                    <td>No</td>
+                    <td class="num">93.0</td>
+                    <td class="dl"><a
+                        href="https://drive.google.com/file/d/1eZITstx9uEbdARBlVOXblxs6KmafUFOb/view?usp=sharing"
+                        target="_blank" rel="noopener">Weights</a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">RT-DETR-x</th>
+                    <td>COCO</td>
+                    <td>No</td>
+                    <td class="num">92.3</td>
+                    <td class="dl"><a
+                        href="https://drive.google.com/file/d/1RFy98nhgGz9jfKfvnN7JU8Ruer1-pIGw/view?usp=sharing"
+                        target="_blank" rel="noopener">Weights</a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">CFINet</th>
+                    <td>COCO</td>
+                    <td>No</td>
+                    <td class="num">89.3</td>
+                    <td class="dl"><a
+                        href="https://drive.google.com/file/d/1Df5kwaOKd9iCR8o4b96C5ZO9TJON0R7c/view?usp=sharing"
+                        target="_blank" rel="noopener">Weights</a></td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        </figure>
       </div>
     </section>
 

@@ -6,6 +6,45 @@ document.addEventListener('DOMContentLoaded', function () {
     video.pause();
   }
 
+  // Dot plot tooltips (hover and keyboard focus)
+  document.querySelectorAll('.dotplot').forEach(function (plot) {
+    var tip = plot.querySelector('.dotplot__tip');
+
+    function show(dot) {
+      var value = document.createElement('strong');
+      value.textContent = dot.dataset.value;
+      var key = document.createElement('span');
+      key.className = 'key';
+      key.style.background = getComputedStyle(dot).backgroundColor;
+      var series = document.createElement('span');
+      series.appendChild(key);
+      series.appendChild(document.createTextNode(dot.dataset.series));
+      var model = document.createElement('span');
+      model.className = 'model';
+      model.textContent = dot.dataset.model;
+      tip.replaceChildren(value, series, model);
+      tip.hidden = false;
+
+      var box = plot.getBoundingClientRect();
+      var mark = dot.getBoundingClientRect();
+      var half = tip.offsetWidth / 2;
+      var x = mark.left + mark.width / 2 - box.left;
+      tip.style.left = Math.min(Math.max(x, half), box.width - half) + 'px';
+      tip.style.top = (mark.top - box.top) + 'px';
+    }
+
+    function hide() {
+      tip.hidden = true;
+    }
+
+    plot.querySelectorAll('.dot[tabindex]').forEach(function (dot) {
+      dot.addEventListener('pointerenter', function () { show(dot); });
+      dot.addEventListener('pointerleave', hide);
+      dot.addEventListener('focus', function () { show(dot); });
+      dot.addEventListener('blur', hide);
+    });
+  });
+
   // Copy-to-clipboard buttons
   document.querySelectorAll('[data-copy]').forEach(function (button) {
     var label = button.querySelector('.copy__label');

@@ -373,56 +373,14 @@ strong {
     0 40px 80px -32px rgba(8, 21, 51, 0.55);
 }
 
-.teaser__lead {
-  max-width: 62ch;
-  margin: 40px auto 0;
-  color: var(--ink-2);
-  font-family: var(--serif);
-  font-size: clamp(1.15rem, 2vw, 1.35rem);
-  line-height: 1.55;
-  text-align: center;
-  text-wrap: pretty;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 56px 0 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+.teaser figcaption {
+  max-width: 80ch;
 }
 
 .teaser + .section {
+  margin-top: 56px;
   border-top: 0;
-}
-
-.stat {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-end;
-  gap: 6px;
-  padding: 26px 24px;
-}
-
-.stat + .stat {
-  border-left: 1px solid var(--line);
-}
-
-.stat dd {
-  margin: 0;
-  color: var(--ink);
-  font-family: var(--serif);
-  font-size: clamp(2rem, 3.6vw, 2.6rem);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  font-variant-numeric: lining-nums tabular-nums;
-}
-
-.stat dt {
-  color: var(--ink-3);
-  font-size: 0.875rem;
-  line-height: 1.45;
+  padding-top: 32px;
 }
 
 
@@ -480,36 +438,33 @@ strong {
   margin-bottom: 0;
 }
 
-.findings {
+.subsection > * + * {
+  margin-top: 24px;
+}
+
+.subsection > h3 {
   margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: finding;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
-.findings li {
-  position: relative;
-  padding: 0 0 18px 48px;
-  counter-increment: finding;
+.subsection > h3 + p {
+  margin-top: 8px;
 }
 
-.findings li:last-child {
-  padding-bottom: 0;
+.subsection > p {
+  max-width: 68ch;
+  margin-bottom: 0;
+  text-wrap: pretty;
 }
 
-.findings li::before {
-  content: counter(finding, decimal-leading-zero);
-  position: absolute;
-  left: 0;
-  top: 2px;
-  color: var(--accent);
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.findings strong {
-  display: block;
+.subsection > p + .figure,
+.subsection > p + .table-figure {
+  margin-top: 32px;
 }
 
 
@@ -529,16 +484,19 @@ strong {
 }
 
 .figure figcaption,
-.table caption {
-  margin-top: 12px;
+.table-figure figcaption {
   color: var(--ink-3);
   font-size: 0.9rem;
   line-height: 1.5;
   text-align: left;
 }
 
+.figure figcaption {
+  margin-top: 12px;
+}
+
 .figure figcaption strong,
-.table caption strong {
+.table-figure figcaption strong {
   color: var(--ink-2);
 }
 
@@ -554,26 +512,39 @@ strong {
 }
 
 
-/* ---------- Tables ---------- */
+/* ---------- Tables (booktabs style: top, mid and bottom rules) ---------- */
+
+.table-figure {
+  margin: 0;
+}
+
+.table-figure figcaption {
+  margin-bottom: 10px;
+}
+
+.table-scroll {
+  position: relative;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.table caption {
-  caption-side: top;
-  margin: 0 0 12px;
+  border-top: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  font-size: 0.925rem;
+  line-height: 1.45;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 .table th,
 .table td {
-  padding: 11px 12px;
-  border-bottom: 1px solid var(--line);
+  padding: 6px 14px;
+  color: var(--ink-2);
+  font-weight: 400;
   text-align: left;
-  vertical-align: middle;
+  vertical-align: baseline;
 }
 
 .table th:first-child,
@@ -586,90 +557,330 @@ strong {
   padding-right: 0;
 }
 
-.table thead th {
-  padding-top: 0;
-  border-bottom-color: var(--ink-3);
-  color: var(--ink-3);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
+.table thead {
+  border-bottom: 1px solid var(--ink);
 }
 
-.table tbody th {
+.table thead th {
+  padding-top: 8px;
   color: var(--ink);
-  font-weight: 500;
+  font-weight: 600;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+/* cmidrule under a column-group header */
+.table thead th.group {
+  padding-bottom: 4px;
+  text-align: center;
+  background: linear-gradient(var(--ink-3), var(--ink-3)) center bottom / calc(100% - 20px) 1px no-repeat;
+}
+
+.table tbody + tbody {
+  border-top: 1px solid var(--line);
+}
+
+.table tr.subhead th {
+  padding-top: 10px;
+  padding-bottom: 2px;
+  color: var(--ink-3);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  padding-bottom: 10px;
+}
+
+.table tbody tr:first-child th,
+.table tbody tr:first-child td {
+  padding-top: 8px;
+}
+
+.table tfoot {
+  border-top: 1px solid var(--ink);
 }
 
 .table tfoot th,
 .table tfoot td {
-  border-bottom: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
   color: var(--ink);
   font-weight: 600;
 }
 
-.table tfoot tr {
-  border-top: 1px solid var(--ink-3);
-}
-
 .table .num {
-  text-align: right;
-  font-variant-numeric: lining-nums tabular-nums;
-}
-
-.table .muted,
-.table .no {
-  color: #9aa3b5;
-}
-
-.table .yes {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.table-scroll {
-  position: relative;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.table .nocase {
-  text-transform: none;
-}
-
-.table--models tr.is-best .num {
-  color: var(--accent-ink);
-  font-weight: 600;
-}
-
-.tag {
-  display: inline-block;
-  margin-left: 6px;
-  padding: 1px 8px;
-  border-radius: 999px;
-  background: var(--accent-wash);
-  color: var(--accent-ink);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  vertical-align: 1px;
-}
-
-.table--models .dl {
   text-align: right;
   white-space: nowrap;
 }
 
-.table--models .dl a {
-  font-size: 0.9rem;
+.table b {
+  color: var(--ink);
+  font-weight: 600;
 }
 
-.download {
-  margin-top: 36px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
+.table .pm {
+  color: var(--ink-3);
+  font-size: 0.85em;
 }
+
+.table .backend {
+  display: block;
+  color: var(--ink-3);
+  font-size: 0.8rem;
+}
+
+.table .nw {
+  white-space: nowrap;
+}
+
+.table .dl {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.table--compact {
+  max-width: 600px;
+}
+
+.table--summary th {
+  padding-right: 24px;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.table--summary td {
+  color: var(--ink);
+}
+
+.table-view {
+  margin-top: 16px;
+}
+
+.table-view summary {
+  width: fit-content;
+  color: var(--accent);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.table-view[open] summary {
+  margin-bottom: 14px;
+}
+
+
+/* ---------- Dot plot ---------- */
+
+.dotplot {
+  --label-w: 210px;
+  --pad-r: 14px;
+  --ped: #2a78d6;
+  --veh: #eb6834;
+  --surface: var(--paper);
+  --grid: #e8ebf1;
+  position: relative;
+  font-size: 0.875rem;
+}
+
+.dotplot__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin: 0 0 4px var(--label-w);
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.dotplot__legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dotplot__body {
+  position: relative;
+}
+
+.dotplot__grid {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--label-w);
+  right: var(--pad-r);
+  pointer-events: none;
+}
+
+.dotplot__grid span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  margin-left: -0.5px;
+  background: var(--grid);
+}
+
+.dotplot__group {
+  position: relative;
+  width: fit-content;
+  margin-top: 12px;
+  padding: 2px 10px 2px 0;
+  background: var(--surface);
+  color: var(--ink-3);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.dotplot__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--label-w) minmax(0, 1fr);
+  align-items: center;
+  min-height: 28px;
+}
+
+.dotplot__label {
+  padding-right: 16px;
+  color: var(--ink-2);
+  line-height: 1.3;
+}
+
+.dotplot__row.is-ref .dotplot__label {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.dotplot__track {
+  position: relative;
+  align-self: stretch;
+  min-height: 28px;
+  margin-right: var(--pad-r);
+}
+
+.dotplot__span {
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 1px;
+  background: #c9d0db;
+}
+
+.dot {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--surface);
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease;
+}
+
+/* 24px hit area around a 10px mark */
+.dot::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+}
+
+.dot--ped {
+  background: var(--ped);
+}
+
+.dot--veh {
+  background: var(--veh);
+}
+
+.dot[tabindex]:hover,
+.dot[tabindex]:focus-visible {
+  outline: none;
+  transform: translate(-50%, -50%) scale(1.35);
+}
+
+.dot[tabindex]:focus-visible {
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 3.5px var(--ink-2);
+}
+
+.dotplot__legend .dot {
+  position: static;
+  display: inline-block;
+  box-shadow: none;
+  transform: none;
+}
+
+.dotplot__value {
+  position: absolute;
+  top: 50%;
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  transform: translate(calc(-100% - 10px), -50%);
+  pointer-events: none;
+}
+
+.dotplot__axis {
+  position: relative;
+  height: 24px;
+  margin: 4px var(--pad-r) 0 var(--label-w);
+  border-top: 1px solid #c3c9d4;
+}
+
+.dotplot__axis span {
+  position: absolute;
+  top: 5px;
+  color: var(--ink-3);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  transform: translateX(-50%);
+}
+
+.dotplot__axis-title {
+  margin: 2px var(--pad-r) 0 var(--label-w);
+  color: var(--ink-3);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.dotplot__tip {
+  position: absolute;
+  z-index: 5;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 24px -8px rgba(17, 24, 39, 0.25);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  transform: translate(-50%, calc(-100% - 12px));
+  pointer-events: none;
+}
+
+.dotplot__tip strong {
+  display: block;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.dotplot__tip .key {
+  display: inline-block;
+  width: 10px;
+  height: 2px;
+  margin-right: 6px;
+  border-radius: 1px;
+  vertical-align: middle;
+}
+
+.dotplot__tip .model {
+  display: block;
+  color: var(--ink-3);
+}
+
+
+/* ---------- Download ---------- */
 
 .download h3 {
   margin: 0 0 8px;
@@ -798,18 +1009,6 @@ strong {
   .section__label {
     position: static;
   }
-
-  .stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .stat:nth-child(3) {
-    border-left: 0;
-  }
-
-  .stat:nth-child(n + 3) {
-    border-top: 1px solid var(--line);
-  }
 }
 
 @media (max-width: 720px) {
@@ -843,14 +1042,6 @@ strong {
     border-radius: 8px;
   }
 
-  .stat {
-    padding: 20px 16px;
-  }
-
-  .stat:nth-child(odd) {
-    padding-left: 0;
-  }
-
   .section {
     padding: 64px 0;
   }
@@ -866,12 +1057,22 @@ strong {
 
   .table th,
   .table td {
-    padding: 10px 6px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 
-  .table thead th {
-    font-size: 0.68rem;
-    letter-spacing: 0.04em;
+  .dotplot {
+    --label-w: 124px;
+    --pad-r: 10px;
+  }
+
+  .dotplot__label {
+    padding-right: 10px;
+    font-size: 0.78rem;
+  }
+
+  .dotplot__legend {
+    margin-left: 0;
   }
 }
 
