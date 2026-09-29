@@ -17,7 +17,7 @@ This is the web page repository for the Constellation Dataset.
 
 ## Acknowledgement
 
-This data was collected at the [PAWR](https://advancedwireless.org/) [COSMOS testbed](https://www.cosmos-lab.org/) at [Columbia University](https://www.columbia.edu/).
+This data was collected at the [PAWR](https://advancedwireless.org/) [COSMOS testbed](https://www.cosmos-lab.org/) at [Columbia University](https://www.columbia.edu/). This work began while the first author was a member of the [Department of Electrical Engineering](https://www.ee.columbia.edu/) ([AIDL Lab](https://www.aidl.ee.columbia.edu/)) at Columbia University.
 
 ## Reference
 ```bibtex

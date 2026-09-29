@@ -312,6 +312,32 @@ strong {
   font-size: 0.95rem;
 }
 
+.affiliation + .affiliation {
+  margin-top: 0;
+}
+
+.affiliation a {
+  color: var(--on-night-2);
+  text-decoration-color: rgba(255, 255, 255, 0.2);
+}
+
+.affiliation a:hover {
+  color: var(--glow-soft);
+  text-decoration-color: currentColor;
+}
+
+.affiliation__sep {
+  margin: 0 6px;
+}
+
+.affiliation__group {
+  white-space: nowrap;
+}
+
+.affiliation__paren {
+  white-space: nowrap;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -1010,6 +1036,17 @@ strong {
 
   .section__label {
     position: static;
+  }
+}
+
+@media (max-width: 800px) {
+  .affiliation__group {
+    display: block;
+    white-space: normal;
+  }
+
+  .affiliation__sep {
+    display: none;
   }
 }
 
